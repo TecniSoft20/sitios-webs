@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}{% endblock %} | TECNISOFT</title>
+
+    {% load static %}
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css">
+    <link href="{% static 'core/vendor/bootstrap/css/main.css' %}" rel="stylesheet">
+    <link href="{% static 'core/vendor/bootstrap/css/skin.css' %}" rel="stylesheet">    
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'core/vendor/bootstrap/js/index.js' %}"></script>
+    
+</head>
+
+<body id="wrapper">
+
+  <div id="fb-root"></div>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/es_LA/sdk.js#xfbml=1&version=v7.0"></script>
+
+  <link href="{% static 'core/vendor/bootstrap/css/whats.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
+  <link href="{% static 'core/vendor/bootstrap/css/whats2.css' %}" rel="stylesheet">
+  <div class="nav-bottom">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+        rel="stylesheet">
+              <div class="popup-whatsapp fadeIn">
+                  <div class="content-whatsapp -top"><button type="button" class="closePopup">
+                        <i class="material-icons icon-font-color" style="color:white;">close</i>
+                      </button> 
+                    
+                     <p>  <img src="{% static 'core/img/about.jpg' %}" width="50">  Hola, ¿en que podemos ayudarle? </p>
+                     
+                  </div>
+                  <div class="content-whatsapp -bottom">
+                    <input class="whats-input" id="whats-in" type="text" Placeholder="Enviar mensaje..." />
+                     
+                     
+                    
+            
+                      <button class="send-msPopup" id="send-btn" type="button">
+                          <i class="material-icons icon-font-color--black">send</i>
+                      </button>
+
+                  </div>
+              </div>
+              <button type="button" id="whats-openPopup" class="whatsapp-button">
+                  <div class="float" >
+                  <i class="fa fa-whatsapp my-float" style="color:white;"></i></div>
+              </button>
+              <div class="circle-anime"></div>
+  </div>
+  <script src="{% static 'core/vendor/bootstrap/js/script2.js' %}"></script>
+
+  <header>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+          <div class="row">
+              <div class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href="{% url 'home' %}">
+                      <h1>TECNISOFT</h1><span>Servicio técnico y desarrollo web</span></a>
+              </div>
+              <div id="navbar" class="collapse navbar-collapse navbar-right">
+                  <ul class="nav navbar-nav mx-auto">
+                      
+                      <li class="nav-item px-lg-4 {% if request.path == '/' %}active{% endif %}"><a href="{% url 'home' %}">Inicio</a></li>
+
+                      <li class="nav-item px-lg-4 {% if request.path == '/services/' %}active{% endif %}"><a href="{% url 'services' %}">Servicios</a></li>
+                      
+                      <li class="nav-item px-lg-4 {% if request.path|slice:":6" == '/blog/' %}active{% endif %}"><a href="{% url 'blog' %}">Precios</a></li>
+
+                      <li class="nav-item px-lg-4 {% if request.path == '/contact/' %}active{% endif %}"><a href="{% url 'contact' %}">Contactos</a></li>
+
+                      <li class="nav-item px-lg-4 {% if request.path == '/about/' %}active{% endif %}"><a href="{% url 'about' %}">Acerca de</a></li>                                  
+                  </ul>
+              </div>
+              <!--/.nav-collapse -->
+          </div>
+      </div>
+    </nav>
+  </header>
+  <!--/.nav-ends -->  
+  {% block banner %} {% endblock %}
+  {% block content %} {% endblock %} 
+
+     
+  <footer class="footer text-faded text-center py-5" id="bottom-footer">
+      <div class="container">
+        <p class="m-0">
+          {% if LINK_TWITTER %}
+            <a href="{{LINK_TWITTER}}" class="link">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-4x"></i>
+                <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          {% endif %}
+          {% if LINK_FACEBOOK %}
+            <a href="{{LINK_FACEBOOK}}" class="link">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-4x"></i>
+                <i class="fa fa-facebook fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          {% endif %}
+          {% if LINK_INSTAGRAM %}
+            <a href="{{LINK_INSTAGRAM}}" class="link">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-4x"></i>
+                <i class="fa fa-instagram fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          {% endif %}
+        </p>
+        <p class="m-0 mbt1">          
+          {% load pages_extras %}
+          {% get_page_list as page_list %}
+          {% for page in page_list %}
+            <a href="{% url 'page' page.id page.title|slugify %}" class="link">{{page.title}}</a> {% if not forloop.last %}·{% endif %} 
+          {% endfor %}
+        </p>
+        <p class="m-0 mbt1">&copy; TECNISOFT </p>        
+      </div>
+   </footer>
+   <!-- aqui va la llave de colores -->
+</body>
+</html>

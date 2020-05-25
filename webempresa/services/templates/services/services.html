@@ -1,0 +1,95 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}Servicios{% endblock %}
+
+{% block banner %}
+<section id="top_banner">
+    <div class="banner" style="background-image:url({% static 'core/img/banner-slide-4.jpg' %});">
+        <div class="inner text-center" >
+            <h2>Servicios de mantenimiento, reparacion y desarrollo web</h2>
+        </div>
+    </div>
+    <div class="page_info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-6">
+                    <h4>Servicios</h4>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6" style="text-align:right;">Inicio<span class="sep"> / </span><span class="current">Servicios</span></div>
+            </div>
+        </div>
+    </div>    
+</section>      
+
+{% endblock %}
+{% block content %}  
+  <section id="portfolio">
+    <div class="container">
+      <div class="row">
+          <div class="section-heading text-center">
+              <div class="col-md-12 col-xs-12">
+                  <h1>Nuestros <span>Servicios</span></h1>
+                  <p class="subheading">REALIZAMOS SERVICIO TÉCNICO DE EQUIPOS INFORMATICOS Y DESARROLLAMOS SITIOS WEB PARA NEGOCIOS Y EMPRENDIMIENTOS.</p>
+              </div>
+          </div>
+      </div>     
+      <div class="row">
+        {% for ser in obj %}
+          <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 portfolio-item">
+              <div class="portfolio-one">
+                  <div class="portfolio-head" align="center">
+                      <img src="{{ser.image.url}}" width="400" height="400">
+                  </div>
+                  <!-- End portfolio-head -->                      
+                  <div class="portfolio-content" style="width:auto;height:400px;">
+                      <h5 class="title" align="center" style="color:#1abac8;">{{ser.title}}</h5>
+                      <h6 class="title">{{ser.subtitle}}</h6>
+                      <p>
+                        {{ ser.content|safe }}
+                      </p>
+                  </div>
+                  
+                  <!-- End portfolio-content -->
+              </div>
+              <!-- End portfolio-item -->
+          </div> 
+        {% endfor %}
+      </div>
+      <div class="row">
+        {% if is_paginated %}
+        <div class="col-md-12 col-sm-12 col-xs-12">
+          <nav aria-label="Page navigation">
+            <ul class="pagination pagination-lg justify-content-end">
+              {% if page_obj.has_previous %}
+                <li class="page-item ">
+                  <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                </li>
+              {% endif %}
+              {% for i in paginator.page_range %}
+                <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                  <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                </li>
+              {% endfor %}
+              {% if page_obj.has_next %}
+                <li class="page-item ">
+                  <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+        {% endif %}
+      </div>        
+    </div>    
+  </section>     
+{% endblock %}

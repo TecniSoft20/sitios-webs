@@ -1,0 +1,96 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+
+{% block title %}Precios{% endblock %}
+
+{% block banner %}
+<section id="top_banner">
+    <div class="banner" style="background-image:url({% static 'core/img/banner-slide-4.jpg' %});">
+        <div class="inner text-center" >
+            <h2>Servicios de mantenimiento, reparacion y desarrollo web</h2>
+        </div>
+    </div>
+    <div class="page_info">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-8 col-sm-8 col-xs-6">
+                    <h4>Precios</h4>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-6" style="text-align:right;">Inicio<span class="sep"> / </span><span class="current">Precios</span></div>
+            </div>
+        </div>
+    </div>    
+</section>      
+
+{% endblock %}
+
+{% block content %}
+  <!-- Proyecto -->
+  <section id="portfolio">
+    <div class="container">
+      <div class="row">
+          {% for post in obj %}
+            <br><br>
+            <div class="row project portfolio-one">   
+                <div class="col-lg-3 col-md-4 offset-lg-1 portfolio-head" align="center">
+                    <img class="img-fluid" src="{{post.image.url}}" alt="" width="300" height="300">
+                </div>
+                <div class="col-lg-7 col-md-8">
+                    <h5 class="title">{{post.published|date:"SHORT_DATE_FORMAT"}}</h5>
+                    <h6 class="section-heading title">{{post.title}}</h6>   
+                    <p>{{ post.content|safe }}</p>
+                    <p class="mb-0 mbt">
+                      <span class="section-heading-under" style="color:black;">Publicado por <em style="color:#1abac8;"><b>{{post.author}}</b></em> en
+                        <em> 
+                         {% for category in post.categories.all %}
+                          <a href="{% url 'category' category.id %}" class="link" style="color:#1abac8;">{{category.name}}</a>{% if not forloop.last %},{% endif %}
+                         {% endfor %}
+                        </em>
+                      </span>
+                    </p>                    
+                </div>
+            </div>
+            <br><br>
+            <br><br>   
+          {% endfor %}
+      </div>
+      <div class="row">
+        {% if is_paginated %}
+          <div class="col-md-12 col-sm-12 col-xs-12">
+            <nav aria-label="Page navigation">
+              <ul class="pagination pagination-lg justify-content-end">
+                {% if page_obj.has_previous %}
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">&laquo;</a>
+                  </li>
+                {% endif %}
+                {% for i in paginator.page_range %}
+                  <li class="page-item {% if page_obj.number == i %}active{% endif %}">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                  </li>
+                {% endfor %}
+                {% if page_obj.has_next %}
+                  <li class="page-item ">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a>
+                  </li>
+                {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">&raquo;</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </section>  
+{% endblock %}
+
+
+    
